@@ -3,7 +3,7 @@
   width: 100svw;
   display: flex;
   justify-content: center;
-  background: url('../assets/images/bg-light.png') no-repeat center fixed;
+  background: url('./assets/images/bg-light.png') no-repeat center fixed;
   background-size: cover;
 }
 

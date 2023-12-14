@@ -1,34 +1,52 @@
-import Layout, { Content } from 'antd/es/layout/layout';
+import React, { createContext, useEffect, useState } from 'react';
 import '../../App.css';
 import './home.css'
-import { Button, Input, Form } from 'antd';
+import { useForm } from 'react-hook-form';
+import { Button, Input, Form, List, Select, AutoComplete } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faMultiply } from '@fortawesome/free-solid-svg-icons'
+import { getAllCountries, getWeatherByLatLon, getCityByPrefixAndCountry, getWeatherByCityAndCountry } from '../request/request';
+import SearchBar from '../search-bar/search-bar';
+
+const MyContext = createContext();
 
 function AppHome() {
-  const [form] = Form.useForm();
+  const [weather, setWeather] = useState({});
+  const [errorRequest, setErrorRequest] = useState('');
+
+  useEffect(() => {
+    setWeather({});
+  }, []);
+
+  const handleWeather = (response) => {
+    if (response.cod === 200) {
+      console.log(response)
+      setWeather(response);
+      setErrorRequest('')
+    } else {
+      setErrorRequest(response.message);
+    }
+  }
+
   return (
     <div className='Home'>
-      <div className='SearchBar'>
-        <Form form={form}>
-            <Form.Item name='city'>
-              <div className='SearchContainer'>
-                <div className='SearchLabel'>City</div>
-                <Input className='SearchInput' type='text'/>
-              </div>
-            </Form.Item>    
-            <Form.Item name='country'>
-              <div className='SearchContainer'>
-                <div className='SearchLabel'>Country</div>
-                <Input className='SearchInput' type='text'/>
-              </div>
-            </Form.Item>    
-        </Form>
-        <Button className='SearchButton'>
-          <FontAwesomeIcon className='SearchIcon' icon={faSearch}></FontAwesomeIcon>
-        </Button>
+      <SearchBar retrieveWeather={handleWeather}/>
+      <div className='SearchResult'>
+        {!errorRequest ? (
+          <div>
+            <img src={require('../../assets/images/cloud.png')} alt="fireSpot"/>
+            <div>{weather?.main?.temp}</div>
+            <div>{weather?.main?.temp_max}</div>
+            <div>{weather?.main?.temp_min}</div>
+            <div>{weather?.name}</div>
+            <div>{weather?.sys?.country}</div>
+            <div>{weather?.main?.humidity}</div>
+            <div>{weather?.weather?.length? weather?.weather[0].main : ''}</div>
+          </div>
+        ) : (
+          <div>{errorRequest}</div>
+        )}
       </div>
-      <div className='SearchResult'></div>
     </div>
   );
 }

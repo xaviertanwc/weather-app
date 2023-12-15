@@ -41,3 +41,28 @@
 .full-column {
     grid-column: 1 / -1;
 }
+
+.MainTemp {
+    color: #6C40B5;
+    font-size: 100px;
+    font-weight: 600;
+}
+
+.CityCountryText {
+    color: #666;
+    font-weight: 700;
+}
+
+.OtherWeatherDetails {
+    color: #666;
+}
+
+.ErrorText {
+    color: #f00;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.SearchHistory {
+    
+}

@@ -3,17 +3,19 @@ import '../../App.css';
 import './home.css'
 import SearchBar from '../search-bar/search-bar';
 import { format } from 'date-fns';
+import { List } from 'antd';
 
 const MyContext = createContext();
 
 function AppHome() {
   const [weather, setWeather] = useState({});
   const [errorRequest, setErrorRequest] = useState('');
+  const [weatherHistory, setWeatherHistory] = useState([]);
 
   const handleWeather = (response) => {
     if (response.cod === 200) {
       setWeather({...response, dateTime: format(new Date(), 'dd-MM-yyyy hh:mm a')});
-      console.log(weather);
+      setWeatherHistory(current => [...current.filter((prevWeather) => prevWeather?.coord?.lat != response.coord.lat && prevWeather?.coord?.lon != response.coord.lon), {...response, dateTime: format(new Date(), 'dd-MM-yyyy hh:mm a')}]);
       setErrorRequest('')
     } else {
       setErrorRequest(response.message);
@@ -45,9 +47,14 @@ function AppHome() {
         ) : (
           <div className='ErrorText'>{errorRequest}</div>
         )}
-      </div>
-      <div className='SearchHistory'>
-
+        <div className='SearchHistory'>
+          <span>Search History</span>
+          <List
+            dataSource={weatherHistory}
+            >
+              <List.Item></List.Item>
+          </List>
+        </div>
       </div>
     </div>
   );

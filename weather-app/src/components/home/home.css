@@ -64,5 +64,15 @@
 }
 
 .SearchHistory {
-    
+    padding: 20px 20px 0 20px;
+    flex: 1;
+    border-radius: 24px 24px 0 0;
+    background: rgba(255, 255, 255, 0.20);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.SearchHistory > span {
+    padding: 8px 0;
 }

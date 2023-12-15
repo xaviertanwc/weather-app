@@ -76,3 +76,31 @@
 .SearchHistory > span {
     padding: 8px 0;
 }
+
+.HistoricalWeatherContainer {
+    height: 30px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.40);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.HistoricalWeatherContainer .ButtonContainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.HistoricalWeatherContainer .ButtonContainer Button {
+    fill: #FFF;
+    color: rgba(0, 0, 0, 0.50);
+    border-radius: 9999px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

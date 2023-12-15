@@ -3,7 +3,9 @@ import '../../App.css';
 import './home.css'
 import SearchBar from '../search-bar/search-bar';
 import { format } from 'date-fns';
-import { List } from 'antd';
+import { faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MyContext = createContext();
 
@@ -15,11 +17,15 @@ function AppHome() {
   const handleWeather = (response) => {
     if (response.cod === 200) {
       setWeather({...response, dateTime: format(new Date(), 'dd-MM-yyyy hh:mm a')});
-      setWeatherHistory(current => [...current.filter((prevWeather) => prevWeather?.coord?.lat != response.coord.lat && prevWeather?.coord?.lon != response.coord.lon), {...response, dateTime: format(new Date(), 'dd-MM-yyyy hh:mm a')}]);
+      setWeatherHistory(current => [{...response, dateTime: format(new Date(), 'dd-MM-yyyy hh:mm a')}, ...current.filter((prevWeather) => prevWeather?.coord?.lat !== response.coord.lat && prevWeather?.coord?.lon !== response.coord.lon)]);
       setErrorRequest('')
     } else {
       setErrorRequest(response.message);
     }
+  }
+
+  const deleteHistoricalWeather = (indexToDelete) => {
+    setWeatherHistory(current => [...current.filter((prevWeather, index) => index !== indexToDelete)]);
   }
 
   return (
@@ -37,7 +43,7 @@ function AppHome() {
                 L: {Math.round(parseFloat(weather?.main?.temp_min))}&#176;
               </div>
               <div className='CityCountryText'>{weather?.name}, {weather?.sys?.country}</div>
-              <div className='OtherWeatherDetails'>{weather?.dateTime?.toString()}</div>
+              <div className='OtherWeatherDetails'>{weather?.dateTime}</div>
               <div className='OtherWeatherDetails'>Humidity: {weather?.main?.humidity}%</div>
               <div className='OtherWeatherDetails'>{weather?.weather?.length? weather?.weather[0].main : ''}</div>
             </div>
@@ -45,15 +51,26 @@ function AppHome() {
         ) : (
           <div></div>
         ) : (
-          <div className='ErrorText'>{errorRequest}</div>
+          <div className='ErrorText'>City Not Found</div>
         )}
         <div className='SearchHistory'>
           <span>Search History</span>
-          <List
-            dataSource={weatherHistory}
-            >
-              <List.Item></List.Item>
-          </List>
+          {weatherHistory.map((prevWeather, index) => {
+            return (
+              <div className='HistoricalWeatherContainer' key={index}>
+                {prevWeather.name}, {prevWeather.sys.country}
+                <div className='ButtonContainer'>
+                  {prevWeather.dateTime}
+                  <Button>
+                    <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                  </Button>
+                  <Button onClick={() => deleteHistoricalWeather(index)}>
+                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                  </Button>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

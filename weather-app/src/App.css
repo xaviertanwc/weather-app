@@ -7,10 +7,10 @@
   background-size: cover;
 }
 
-/* body, html {
+body, html {
   font-family: 'Noto Sans';
   font-weight: 400;
-} */
+}
 
 .App-logo {
   height: 40vmin;
@@ -48,6 +48,7 @@
 }
 
 .content {
-  width: 700px;
-  max-width: 700px;
+  display: flex;
+  max-width: 736px;
+  flex: 1;
 }

@@ -14,13 +14,8 @@ function AppHome() {
   const [weather, setWeather] = useState({});
   const [errorRequest, setErrorRequest] = useState('');
 
-  useEffect(() => {
-    setWeather({});
-  }, []);
-
   const handleWeather = (response) => {
     if (response.cod === 200) {
-      console.log(response)
       setWeather(response);
       setErrorRequest('')
     } else {
@@ -32,17 +27,24 @@ function AppHome() {
     <div className='Home'>
       <SearchBar retrieveWeather={handleWeather}/>
       <div className='SearchResult'>
-        {!errorRequest ? (
+        {!errorRequest ? weather ? (
           <div>
             <img src={require('../../assets/images/cloud.png')} alt="fireSpot"/>
-            <div>{weather?.main?.temp}</div>
-            <div>{weather?.main?.temp_max}</div>
-            <div>{weather?.main?.temp_min}</div>
-            <div>{weather?.name}</div>
-            <div>{weather?.sys?.country}</div>
-            <div>{weather?.main?.humidity}</div>
-            <div>{weather?.weather?.length? weather?.weather[0].main : ''}</div>
+            <div className='CurrentSearchContainer'>
+              <div className='full-column'>Today's Weather</div>
+              <div className='full-column'>{Math.round(parseFloat(weather?.main?.temp))}</div>
+              <div className='full-column'>
+                <div>{Math.round(parseFloat(weather?.main?.temp_max))}</div>
+                <div>{Math.round(parseFloat(weather?.main?.temp_min))}</div>
+              </div>
+              <div>{weather?.name}</div>
+              <div>{weather?.sys?.country}</div>
+              <div>{weather?.main?.humidity}</div>
+              <div>{weather?.weather?.length? weather?.weather[0].main : ''}</div>
+            </div>
           </div>
+        ) : (
+          <div></div>
         ) : (
           <div>{errorRequest}</div>
         )}

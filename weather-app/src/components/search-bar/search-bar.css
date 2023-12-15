@@ -10,6 +10,11 @@
     gap: 20px;
     flex-grow: 1;
     flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.SearchBar Form .ant-form-item {
+    flex: 1;
 }
 
 .SearchBar .SearchContainer {

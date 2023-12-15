@@ -84,15 +84,15 @@ function SearchBar({retrieveWeather}) {
                 </Select>
               </div>
             </Form.Item>    
+            <div className='SearchButtonContainer'>
+              <Button className='SearchButton' onClick={onSubmit}>
+                <FontAwesomeIcon className='SearchIcon' icon={faSearch}></FontAwesomeIcon>
+              </Button>
+              <Button className='SearchButton' onClick={onClear}>
+                <FontAwesomeIcon className='SearchIcon' icon={faMultiply}></FontAwesomeIcon>
+              </Button>
+            </div>
         </Form>
-        <div className='SearchButtonContainer'>
-          <Button className='SearchButton' onClick={onSubmit}>
-            <FontAwesomeIcon className='SearchIcon' icon={faSearch}></FontAwesomeIcon>
-          </Button>
-          <Button className='SearchButton' onClick={onClear}>
-            <FontAwesomeIcon className='SearchIcon' icon={faMultiply}></FontAwesomeIcon>
-          </Button>
-        </div>
       </div>
     )
 }

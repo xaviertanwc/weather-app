@@ -39,6 +39,7 @@
     height: 18px;
     
     color: rgba(0, 0, 0, 0.40);
+    font-family: 'Noto Sans';
     font-size: 10px;
     font-weight: 400;
 }
@@ -52,9 +53,10 @@
     background: none;
     border: none;
     padding-left: 0;
-    height: 18px;
+    height: 30px;
 
     color: #000;
+    font-family: 'Noto Sans';
     font-size: 16px;
     font-weight: 400;
 }
@@ -67,9 +69,20 @@
     padding-left: 0;
 }
 
+.SearchBar .SearchContainer .SearchSelect .ant-select-selector .ant-select-selection-item {
+    font-family: 'Noto Sans';
+    font-size: 16px;
+}
+
 .SearchBar .SearchContainer .SearchSelect:where(.css-dev-only-do-not-override-p7e5j5).ant-select-single .ant-select-selector .ant-select-selection-search {
     inset-inline-start: 0;
     inset-inline-end: 0;
+}
+
+.SearchBar .SearchContainer .SearchSelect .ant-select-selector,
+.SearchBar .SearchContainer .SearchSelect .ant-select-selector .ant-select-selection-search,
+.SearchBar .SearchContainer .SearchSelect .ant-select-selector .ant-select-selection-item {
+    color: inherit;
 }
 
 .SearchBar .SearchContainer .SearchSelect:where(.css-dev-only-do-not-override-p7e5j5).ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
@@ -79,8 +92,6 @@
 
 :where(.css-dev-only-do-not-override-p7e5j5).ant-select-dropdown {
     background-color: rgba(255, 255, 255, 0.50);
-    width: 242px !important;
-    top: 115px !important;
 }
 
 .SearchBar form .ant-form-item {

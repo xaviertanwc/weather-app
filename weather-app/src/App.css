@@ -3,8 +3,17 @@
   width: 100svw;
   display: flex;
   justify-content: center;
-  background: url('./assets/images/bg-light.png') no-repeat center fixed;
-  background-size: cover;
+  /* background: url('./assets/images/bg-light.png') no-repeat center fixed; */
+  /* background-size: cover; */
+  overflow-y: scroll;
+}
+
+.App > img {
+  position: absolute;
+  height: inherit;
+  width: inherit;
+  top: 0;
+  left: 0;
 }
 
 body, html {

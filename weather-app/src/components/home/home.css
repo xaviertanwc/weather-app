@@ -32,14 +32,17 @@
 }
 
 .SearchResult .CurrentSearchContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     gap: 10px;
 }
 
-.full-column {
-    grid-column: 1 / -1;
+.SearchResult .CurrentSearchContainer .OtherDetails {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .MainTemp {
@@ -49,18 +52,18 @@
 }
 
 .CityCountryText {
-    color: #666;
     font-weight: 700;
 }
 
-.OtherWeatherDetails {
-    color: #666;
+.NoSearchHistoryText,
+.ErrorText {
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
 }
 
 .ErrorText {
     color: #f00;
-    text-transform: capitalize;
-    text-align: center;
 }
 
 .SearchHistory {
@@ -85,6 +88,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.HistoricalWeatherContainer:last-child {
+    margin-bottom: 18px;
 }
 
 .HistoricalWeatherContainer .ButtonContainer {

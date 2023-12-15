@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import '../../App.css';
 import './search-bar.css'
-import { useForm } from 'react-hook-form';
-import { Button, Input, Form, List, Select, AutoComplete } from 'antd';
+import { Button, Input, Form, Select } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faMultiply } from '@fortawesome/free-solid-svg-icons'
-import { getAllCountries, getWeatherByLatLon, getCityByPrefixAndCountry, getWeatherByCityAndCountry } from '../request/request';
+import { getAllCountries, getWeatherByLatLon, getWeatherByCityAndCountry } from '../request/request';
 
-function SearchBar({ retrieveWeather }) {
+const SearchBar = forwardRef((props, ref) => {
   const [form] = Form.useForm();
   const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [weather, setWeather] = useState({});
   const [errorRequest, setErrorRequest] = useState(false);
 
   useEffect(() => {
     setCountries([]);
-    setCities([]);
 
     fetchCountries();
   }, [])
+
+  useImperativeHandle(ref, () => ({
+    fetchPrevWeather(lat, lon) {
+      fetchWeatherByLatLon(lat, lon);
+    }
+  }))
 
   async function fetchCountries() {
     const response = await getAllCountries();
@@ -45,7 +47,12 @@ function SearchBar({ retrieveWeather }) {
 
   async function fetchWeather(cityName, countryCode) {
     const response = await getWeatherByCityAndCountry(cityName, countryCode);
-    retrieveWeather(response);
+    props.retrieveWeather(response);
+  }
+
+  async function fetchWeatherByLatLon(lat, lon) {
+    const response = await getWeatherByLatLon(lat, lon);
+    props.retrieveWeather(response)
   }
 
   const onSubmit = () => {
@@ -61,7 +68,7 @@ function SearchBar({ retrieveWeather }) {
         <Form.Item name='city'>
           <div className='SearchContainer'>
             <div className='SearchLabel'>City</div>
-            <Input className='SearchInput'></Input>
+            <Input className='SearchInput' style={{color: (props.isBright? '' : '#fff')}}></Input>
           </div>
         </Form.Item>
         <Form.Item name='country'>
@@ -75,9 +82,10 @@ function SearchBar({ retrieveWeather }) {
               filterOption={filterOptions}
               placement='bottomRight'
               onSelect={setCountryValue}
+              style={{color: (props.isBright? '' : '#fff')}}
             >
               {countries.map((country, index) =>
-                <Select.Option key={index} value={index}>
+                <Select.Option key={index} value={index}  style={{color: (props.isBright? '' : '#fff')}}>
                   {country.name.common}
                 </Select.Option>
               )}
@@ -95,6 +103,6 @@ function SearchBar({ retrieveWeather }) {
       </Form>
     </div>
   )
-}
+})
 
 export default SearchBar;

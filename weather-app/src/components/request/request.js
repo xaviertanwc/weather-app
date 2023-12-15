@@ -30,7 +30,7 @@ export const getAllCountries = ()  => {
 
 export const getWeatherByLatLon = (lat, lon) => {
     let result = openWeatherMapUrl
-        .get("weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherMapApiKey)
+        .get("weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherMapApiKey + "&units=metric")
         .then((response) => {
             return response.data;
         })
@@ -49,19 +49,6 @@ export const getWeatherByCityAndCountry = (cityName, countryCode) => {
         })
         .catch((error) => {
             return error.response.data;
-        });
-
-    return result;
-}
-
-export const getCityByPrefixAndCountry = (city, countryCode) => {
-    let result = geoDbUrl
-        .get("geo/places?limit=10&offset=0&types=CITY&namePrefix=" + city + (countryCode? "&countryIds=" + countryCode : ""))
-        .then((response) => {
-            return response.data.data;
-        })
-        .catch((error) => {
-            return error;
         });
 
     return result;
